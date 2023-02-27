@@ -1,20 +1,15 @@
-import OpacitySlider from "@components/opacity-slider"
-import {
-  blackA,
-  grassDarkA,
-  mauveDark,
-  mauveDarkA,
-  violetDark
-} from "@radix-ui/colors"
+import Slider from "@components/slider"
+import Switch from "@components/switch"
+import { blackA, mauveDark, mauveDarkA, violetDark } from "@radix-ui/colors"
 import * as Label from "@radix-ui/react-label"
-import * as Switch from "@radix-ui/react-switch"
 import { globalCss, styled } from "@stitches/react"
 import { useState } from "react"
 import Logo from "react:~/assets/phantasm-logo.svg"
 
 function IndexPopup() {
-  const [opacity, setOpacity] = useState([50])
-  const [url, setUrl] = useState("")
+  const [opacity, setOpacity] = useState<number[]>([50])
+  const [url, setUrl] = useState<string>("")
+  const [isOn, setIsOn] = useState<boolean>(true)
 
   globalStyles()
 
@@ -25,12 +20,17 @@ function IndexPopup() {
     })
   }
 
+  async function handleCheckedChange(checked) {
+    // TODO: Add logic to handle checked change
+  }
+
   return (
     <>
       <Body>
         <InputGroup>
-          <LabelRoot htmlFor="url">Path</LabelRoot>
+          <LabelRoot htmlFor="path">Path</LabelRoot>
           <Input
+            id="path"
             type="text"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
@@ -38,8 +38,9 @@ function IndexPopup() {
           />
         </InputGroup>
         <InputGroup>
-          <LabelRoot htmlFor="url">Opacity</LabelRoot>
-          <OpacitySlider
+          <LabelRoot htmlFor="opacity">Opacity</LabelRoot>
+          <Slider
+            id="opacity"
             value={opacity}
             onValueChange={(value) => setOpacity(value)}
             onValueCommit={handleValueCommit}
@@ -53,9 +54,7 @@ function IndexPopup() {
         <LogoContainer>
           <Logo />
         </LogoContainer>
-        <SwitchRoot id="airplane-mode">
-          <SwitchThumb />
-        </SwitchRoot>
+        <Switch checked={isOn} onCheckedChange={handleCheckedChange} />
       </Footer>
     </>
   )
@@ -115,33 +114,6 @@ const Footer = styled("div", {
   alignItems: "center",
   justifyContent: "space-between",
   padding: "12px 16px"
-})
-
-const SwitchRoot = styled(Switch.Root, {
-  all: "unset",
-  width: 42,
-  height: 25,
-  backgroundColor: blackA.blackA9,
-  borderRadius: "9999px",
-  position: "relative",
-  boxShadow: `0 2px 10px ${blackA.blackA7}`,
-  cursor: "pointer",
-  WebkitTapHighlightColor: "rgba(0, 0, 0, 0)",
-  "&:focus": { boxShadow: `0 0 0 2px black` },
-  '&[data-state="checked"]': { backgroundColor: `${grassDarkA.grassA9}` }
-})
-
-const SwitchThumb = styled(Switch.Thumb, {
-  display: "block",
-  width: 21,
-  height: 21,
-  backgroundColor: "white",
-  borderRadius: "9999px",
-  boxShadow: `0 2px 2px ${blackA.blackA7}`,
-  transition: "transform 100ms",
-  transform: "translateX(2px)",
-  willChange: "transform",
-  '&[data-state="checked"]': { transform: "translateX(19px)" }
 })
 
 export default IndexPopup

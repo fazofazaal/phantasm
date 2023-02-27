@@ -1,20 +1,23 @@
 import { blackA, violet } from "@radix-ui/colors"
-import * as Slider from "@radix-ui/react-slider"
+import * as RadixSlider from "@radix-ui/react-slider"
 import { styled } from "@stitches/react"
 
 type Props = {
+  id?: string
   value: number[]
   onValueChange: (value: number[]) => void
   onValueCommit?: (value: number[]) => void
 }
 
-export default function OpacitySlider({
+export default function Slider({
+  id,
   value,
   onValueChange,
   onValueCommit
 }: Props) {
   return (
     <SliderRoot
+      id={id}
       value={value}
       onValueChange={onValueChange}
       onValueCommit={onValueCommit}
@@ -27,7 +30,7 @@ export default function OpacitySlider({
   )
 }
 
-const SliderRoot = styled(Slider.Root, {
+const SliderRoot = styled(RadixSlider.Root, {
   position: "relative",
   display: "flex",
   alignItems: "center",
@@ -37,7 +40,7 @@ const SliderRoot = styled(Slider.Root, {
   height: 20
 })
 
-const SliderTrack = styled(Slider.Track, {
+const SliderTrack = styled(RadixSlider.Track, {
   backgroundColor: blackA.blackA10,
   position: "relative",
   flexGrow: 1,
@@ -46,14 +49,14 @@ const SliderTrack = styled(Slider.Track, {
   cursor: "pointer"
 })
 
-const SliderRange = styled(Slider.Range, {
+const SliderRange = styled(RadixSlider.Range, {
   position: "absolute",
   backgroundColor: "white",
   borderRadius: "9999px",
   height: "100%"
 })
 
-const SliderThumb = styled(Slider.Thumb, {
+const SliderThumb = styled(RadixSlider.Thumb, {
   display: "block",
   width: 20,
   height: 20,
