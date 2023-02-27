@@ -2,8 +2,7 @@ import type { PlasmoCSConfig } from "plasmo"
 import { useEffect, useState } from "react"
 
 export const config: PlasmoCSConfig = {
-  matches: ["https://www.plasmo.com/*"],
-  css: ["font.css"]
+  matches: ["https://www.plasmo.com/*"]
 }
 
 const Overlay = () => {

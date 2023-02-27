@@ -13,6 +13,7 @@
     "@radix-ui/colors": "^0.1.8",
     "@radix-ui/react-label": "^2.0.0",
     "@radix-ui/react-slider": "^1.1.0",
+    "@radix-ui/react-switch": "^1.0.1",
     "@stitches/react": "^1.2.8",
     "plasmo": "0.65.0",
     "react": "18.2.0",
