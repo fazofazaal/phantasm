@@ -73,7 +73,6 @@ const Input = styled("input", {
   lineHeight: 1,
   color: "white",
   backgroundColor: mauveDarkA.mauveA3,
-  // boxShadow: `0 0 0 1px ${mauveDarkA.mauveA9}`,
   "&:focus": { boxShadow: `0 0 0 2px ${blackA.blackA10}` }
 })
 
