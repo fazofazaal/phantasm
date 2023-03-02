@@ -2,7 +2,7 @@ import type { PlasmoCSConfig } from "plasmo";
 import { useEffect, useState } from "react";
 
 export const config: PlasmoCSConfig = {
-  matches: ["https://www.plasmo.com/*"]
+  matches: ["https://www.google.com/*"]
 };
 
 const Overlay = () => {
@@ -22,11 +22,11 @@ const Overlay = () => {
       }
       if (request.isOn) {
         console.log("received isOn message", request);
-        setOpacity(request.isOn);
+        setIsOn(request.isOn);
       }
       if (request.url) {
         console.log("received url message", request);
-        setOpacity(request.url);
+        setUrl(request.url);
       }
     });
     return () => {
