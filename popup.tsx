@@ -1,27 +1,53 @@
-import Slider from "@components/slider"
-import Switch from "@components/switch"
-import { blackA, mauveDark, mauveDarkA, violetDark } from "@radix-ui/colors"
-import * as Label from "@radix-ui/react-label"
-import { globalCss, styled } from "@stitches/react"
-import { useState } from "react"
-import Logo from "react:~/assets/phantasm-logo.svg"
+import Slider from "@components/slider";
+import Switch from "@components/switch";
+import { blackA, mauveDark, mauveDarkA, violetDark } from "@radix-ui/colors";
+import * as Label from "@radix-ui/react-label";
+import { globalCss, styled } from "@stitches/react";
+import { KeyboardEvent, KeyboardEventHandler, useState } from "react";
+import Logo from "react:~/assets/phantasm-logo.svg";
 
 function IndexPopup() {
-  const [opacity, setOpacity] = useState<number[]>([50])
-  const [url, setUrl] = useState<string>("")
-  const [isOn, setIsOn] = useState<boolean>(true)
+  const [opacity, setOpacity] = useState<number[]>([50]);
+  const [url, setUrl] = useState<string>("");
+  const [isOn, setIsOn] = useState<boolean>(true);
 
-  globalStyles()
+  globalStyles();
 
-  async function handleValueCommit(value) {
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
+  async function handleValueCommit(value: number[]) {
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      currentWindow: true
+    });
+
     await chrome.tabs.sendMessage(tab.id, {
       opacity: value
-    })
+    });
   }
 
-  async function handleCheckedChange(checked) {
-    // TODO: Add logic to handle checked change
+  async function handleCheckedChange(checked: boolean) {
+    setIsOn(checked);
+
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      currentWindow: true
+    });
+
+    await chrome.tabs.sendMessage(tab.id, {
+      isOn: checked
+    });
+  }
+
+  async function handleEnter(event: KeyboardEvent<HTMLInputElement>) {
+    if (event.key == "Enter") {
+      const [tab] = await chrome.tabs.query({
+        active: true,
+        currentWindow: true
+      });
+
+      await chrome.tabs.sendMessage(tab.id, {
+        url
+      });
+    }
   }
 
   return (
@@ -35,6 +61,7 @@ function IndexPopup() {
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="localhost:3000"
+            onKeyUp={handleEnter}
           />
         </InputGroup>
         <InputGroup>
@@ -57,12 +84,12 @@ function IndexPopup() {
         <Switch checked={isOn} onCheckedChange={handleCheckedChange} />
       </Footer>
     </>
-  )
+  );
 }
 
 const globalStyles = globalCss({
   body: { margin: 0, padding: 0 }
-})
+});
 
 const Body = styled("div", {
   display: "flex",
@@ -71,14 +98,14 @@ const Body = styled("div", {
   padding: 16,
   paddingBottom: 24,
   backgroundColor: mauveDark.mauve2
-})
+});
 
 const LabelRoot = styled(Label.Root, {
   fontSize: 15,
   fontWeight: 500,
   lineHeight: "35px",
   color: mauveDarkA.mauveA11
-})
+});
 
 const Input = styled("input", {
   all: "unset",
@@ -94,18 +121,18 @@ const Input = styled("input", {
   color: "white",
   backgroundColor: mauveDarkA.mauveA3,
   "&:focus": { boxShadow: `0 0 0 2px ${blackA.blackA10}` }
-})
+});
 
 const InputGroup = styled("div", {
   display: "flex",
   flexDirection: "column",
   gap: 4
-})
+});
 
 const LogoContainer = styled("div", {
   width: "80px",
   display: "inline-block"
-})
+});
 
 const Footer = styled("div", {
   background: violetDark.violet5,
@@ -114,6 +141,6 @@ const Footer = styled("div", {
   alignItems: "center",
   justifyContent: "space-between",
   padding: "12px 16px"
-})
+});
 
-export default IndexPopup
+export default IndexPopup;
