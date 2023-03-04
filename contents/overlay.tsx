@@ -19,14 +19,12 @@ const Overlay = () => {
       if (request.opacity) {
         console.log("received message", request);
         setOpacity(request.opacity);
-      }
-      if (request.isOn) {
-        console.log("received isOn message", request);
-        setIsOn(request.isOn);
-      }
-      if (request.url) {
+      } else if (request.url) {
         console.log("received url message", request);
         setUrl(request.url);
+      } else {
+        console.log("received isOn message", request);
+        setIsOn(request.isOn);
       }
     });
     return () => {
@@ -36,7 +34,7 @@ const Overlay = () => {
     };
   }, []);
 
-  if (isOn && url) {
+  if (url) {
     return (
       <iframe
         src={url}
@@ -44,8 +42,10 @@ const Overlay = () => {
           width: "100vw",
           height: "100vh",
           border: "none",
-          opacity: opacity / 100
-        }}/>
+          opacity: opacity / 100,
+          display: isOn ? "block" : "none"
+        }}
+      />
     );
   } else return null;
 };
