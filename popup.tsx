@@ -60,7 +60,7 @@ function IndexPopup() {
             type="text"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            placeholder="localhost:3000"
+            placeholder="http://localhost:3000/"
             onKeyUp={handleEnter}
           />
         </InputGroup>
@@ -76,6 +76,7 @@ function IndexPopup() {
             Opacity: {opacity}%
           </small>
         </InputGroup>
+        <p style={{ color: "white" }}>{String(isOn)}</p>
       </Body>
       <Footer>
         <LogoContainer>
